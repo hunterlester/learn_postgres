@@ -55,6 +55,9 @@ function appendData(data) {
          return key;
        }
      }).map(function(key) {
+       if(key == 'purchase_date') {
+         datum[key] = moment(datum[key]).format('MMM Do YY');
+       }
        var td = document.createElement('td');
        td.textContent = datum[key];
        tr.appendChild(td);
