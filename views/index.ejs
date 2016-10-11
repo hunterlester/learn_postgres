@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+    <label for="breed">Breed</label>
+    <input type="text" name="breed">
+
+    <label for="name">Name</label>
+    <input type="text" name="name">
+
+    <label for="purchase_date">Purchase Date</label>
+    <input type="date" name="purchase_date">
+
+    <button type="button" onclick="apiRequest('POST', '/herd')"></button>
+<br>
+    <table>
+      <thead>
+        <tr>
+          <th>
+            Breed
+          </th>
+          <th>
+            Name
+          </th>
+          <th>
+            Purchase Date
+          </th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+
+      </tbody>
+    </table>
+
+    <script type="text/javascript" src="javascripts/clientFetch.js">
+
+    </script>
+  </body>
+</html>
