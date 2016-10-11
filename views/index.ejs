@@ -5,22 +5,28 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <label for="breed">Breed</label>
-    <input type="text" name="breed">
+    <h1>Herd Inventory</h1>
+    <p>Welcome to <%= title %> herd inventory</p>
+    <form id="herd_form">
+      <label for="breed">Breed</label>
+      <input type="text" name="breed">
 
-    <label for="name">Name</label>
-    <input type="text" name="name">
+      <label for="name">Name</label>
+      <input type="text" name="name">
 
-    <label for="purchase_date">Purchase Date</label>
-    <input type="date" name="purchase_date">
+      <label for="purchase_date">Purchase Date</label>
+      <input type="date" name="purchase_date">
 
-    <button type="button" onclick="apiRequest('POST', '/herd')"></button>
+      <button type="submit" id="submit" onclick="apiRequest('POST', '/herd')">Submit</button>
+    </form>
+
 <br>
     <table>
       <thead>
         <tr>
+          <th>
+            Tag ID
+          </th>
           <th>
             Breed
           </th>

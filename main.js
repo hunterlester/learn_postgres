@@ -15,9 +15,15 @@ var client = new pg.Client({
   user: 'postgres',
   password: 'postgres',
   database: 'postgres',
-  host: '192.168.99.100',
+  host: 'learn-postgres.c3ccnecqsxt1.us-west-2.rds.amazonaws.com',
   port: 5432
 });
+
+// Docker machine host
+// 192.168.99.100
+
+// AWS endpoint
+// learn-postgres.c3ccnecqsxt1.us-west-2.rds.amazonaws.com
 client.connect();
 // var query = client.query(
 //   'CREATE TABLE herd (id SERIAL PRIMARY KEY, breed VARCHAR(80), name VARCHAR(80), purchase_date DATE)'

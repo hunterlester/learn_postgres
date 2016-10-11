@@ -1,20 +1,29 @@
-var results = [];
+document.getElementById('submit').addEventListener('click', function(event) {
+  event.preventDefault();
+})
 
 function apiRequest(method, endpoint) {
   var elements = document.getElementsByTagName('input');
   var dataArray = [];
-  Array.prototype.map.call(elements, function(elem) {
-    dataArray.push(elem.value);
-  });
-
   var dataObj = {};
-  dataObj.breed = dataArray[0];
-  dataObj.name = dataArray[1];
-  dataObj.purchase_date = dataArray[2];
+
+  Array.prototype.map.call(elements, function(elem) {
+    Object.defineProperty(dataObj, elem.name, {
+      enumerable: true,
+      configurable: true,
+      writable: true,
+      value: elem.value
+    });
+    elem.value = '';
+  });
 
   var body = Object.keys(dataObj).map(function(key) {
     return key + "=" + dataObj[key];
   }).join('&');
+
+  if(method == "GET") {
+    body = null;
+  }
 
   return fetch(endpoint, {
     method: method,
@@ -25,7 +34,6 @@ function apiRequest(method, endpoint) {
   })
   .then(checkStatus)
   .then(function(res) {
-    results = res;
     appendData(res);
   })
 }
@@ -37,24 +45,24 @@ function checkStatus(response) {
     return response.json()
       .then(function(err) {
         console.log(err);
+        throw err;
       });
-    // var error = new Error(response.statusText)
-    // error.response = response;
-    // throw error;
   }
 }
 
 
 function appendData(data) {
    var table_body = document.getElementById('tbody');
+
+   var data_array = Array.prototype.slice.call(table_body.childNodes);
+   data_array.map(function(node) {
+     table_body.removeChild(node);
+   });
+
    data.map(function(datum) {
      var tr = document.createElement('tr');
      table_body.appendChild(tr);
-     Object.keys(datum).filter(function(key) {
-       if(key !== "id") {
-         return key;
-       }
-     }).map(function(key) {
+     Object.keys(datum).map(function(key) {
        if(key == 'purchase_date') {
          datum[key] = moment(datum[key]).format('MMM Do YY');
        }
@@ -64,3 +72,5 @@ function appendData(data) {
      });
    });
 }
+
+apiRequest('GET', '/herd');
