@@ -64,7 +64,7 @@ function appendData(data) {
      table_body.appendChild(tr);
      Object.keys(datum).map(function(key) {
        if(key == 'purchase_date') {
-         datum[key] = moment(datum[key]).format('MMM Do YY');
+         datum[key] = new Date(datum[key]).toDateString();
        }
        var td = document.createElement('td');
        td.textContent = datum[key];
