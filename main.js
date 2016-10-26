@@ -24,9 +24,10 @@ var client = new pg.Client({
 
 // AWS endpoint
 // learn-postgres.c3ccnecqsxt1.us-west-2.rds.amazonaws.com
+
 client.connect();
 // var query = client.query(
-//   'CREATE TABLE herd (id SERIAL PRIMARY KEY, breed VARCHAR(80), name VARCHAR(80), purchase_date DATE)'
+//   'CREATE TABLE json_herd (id SERIAL PRIMARY KEY, member JSONB)'
 // );
 // query.on('end', function() {
 //   client.end(function(err) {

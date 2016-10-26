@@ -25,12 +25,13 @@ router.get('/', function(req, res, next) {
       return res.status(500).json({success: false, data: err});
     }
 
-    var query = client.query('SELECT * FROM herd ORDER BY purchase_date ASC');
+    var query = client.query('SELECT member FROM json_herd');
     query.on('row', function(row) {
-      results.push(row);
+      results.push(row.member);
     });
     query.on('end', function() {
       done();
+      console.log(results);
       return res.json(results);
     });
   });
@@ -41,14 +42,15 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
   var results = [];
   var data = {breed: req.body.breed, name: req.body.name, purchase_date: req.body.purchase_date};
+  data = JSON.stringify(data);
   pg.connect(connect_config, function(err, client, done) {
     if(err) {
       done();
       console.log(err);
       return res.status(500).json({success: false, data: err});
     }
-    client.query('INSERT INTO herd (breed, name, purchase_date) values($1, $2, $3)', [data.breed, data.name, data.purchase_date]);
-    var query = client.query('SELECT * FROM herd ORDER BY purchase_date ASC');
+    client.query('INSERT INTO json_herd (member) values($1)', [data]);
+    var query = client.query('SELECT member FROM json_herd');
     query.on('row', function(row) {
       results.push(row);
     });
